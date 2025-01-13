@@ -1,89 +1,121 @@
-Received: from mail-gateway-shared02.cyon.net (mail-gateway-shared02.cyon.net [194.126.200.224])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 758F71BEF9D
-	for <lch@lists.linux.dev>; Sun, 12 Jan 2025 19:25:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.126.200.224
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 049132343AE
+	for <lch@lists.linux.dev>; Mon, 13 Jan 2025 09:11:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736709909; cv=none; b=EkZbtlMMcP4/K09FwwlgmT+cAFoojyjw1cWnY0kqkCxD0rEx/R56skDWk5Mr+ZUkv5gDYajCQZpPvSOfMWbzg7FBO8IuqgwS8uArLKhEv+Gc+WLJGigIS0qcmsM4s+UzD8QePBjeQo3UDaW3CwksyapAjGf92crTxLZhZWbtBkQ=
+	t=1736759471; cv=none; b=a0RjWoCAlVLNpb3ChOH/BGCENiMudkrIjafr4wSej/QengbjQjpO2LP4XkXsdTIk0BH4OCZbMTJKLv8qFLlujREmBvZRALulekk01L9rLFfy6bWfKPzDnfSylGzK2PRuSJH6styVB18+oHkk7QfKLQF8h/xpDReQq57rZaMohk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736709909; c=relaxed/simple;
-	bh=rDbO4AvFdMjXB+tzj6oaT3kKkaOMxMfY15g4oG+Urbs=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type; b=azcADvLCNlQR3r4wPjlpC6UXDMOtmTMsx49XYAFcn69WWHDDynYAKpwJSIrAqLoXXXY2C6vAmgZvbcB5qG1NnhnspzvIARYUIVpn72vTWEZ4TF3UUEGRS6kyRAiK/e2bonBo0mbCkBcr8cpHowEc4nxMIh6hcfNgRcTn7S2oU1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=brain4free.org; spf=pass smtp.mailfrom=brain4free.org; dkim=pass (2048-bit key) header.d=brain4free.org header.i=@brain4free.org header.b=kniX02zl; arc=none smtp.client-ip=194.126.200.224
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=brain4free.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=brain4free.org
+	s=arc-20240116; t=1736759471; c=relaxed/simple;
+	bh=Mubet9KBzwKA6Udzb9XLTcym3xHc1dZD3Qx5T552y0M=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=g4TRf4NyAFfad9Lx20UewFZsR2n5OURP8MWRG90VyMmu5jVKcUsZNd8+igTJnyuQ/1jEKi4XPHuySHix8jwesAfdcglTOb0arAcdamgJnLSNc5UqTjPOD8Par2pPX1sdOVINHqCgvkgkecHv00oJik77FSnI/RGA8VdJMzRTA5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RNqYDjnB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=brain4free.org header.i=@brain4free.org header.b="kniX02zl"
-Received: from s075.cyon.net ([149.126.4.84])
-	by mail-gateway-shared02.cyon.net with esmtpsa (TLS1.2:ECDHE_SECP256R1__RSA_SHA512__AES_256_GCM:256)
-	(Exim)
-	(envelope-from <nussgipfel@brain4free.org>)
-	id 1tX3WO-00BhjR-0v
-	for lch@lists.linux.dev;
-	Sun, 12 Jan 2025 20:21:18 +0100
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=brain4free.org; s=default; h=Content-Transfer-Encoding:Content-Type:
-	MIME-Version:Message-ID:Subject:To:From:Date:Sender:Reply-To:Cc:Content-ID:
-	Content-Description; bh=rDbO4AvFdMjXB+tzj6oaT3kKkaOMxMfY15g4oG+Urbs=; b=kniX0
-	2zljcG+PKvlkRGBL+VrlIMqvWcvu1qz/0KDMaskLSOKU8DlBwGBVCiH2B2VTYVk2AwzFXmua4Ymq0
-	NJNgpwZPHXp+YfDK7t7Nm+o4HxOfPPwav51zofRXJZHFZ4ZJz3SL4wR74HyhkSh1U0xxBj3Awr1Bw
-	6BzpqwnvfyH+KMUM/tZT4cYz+aAGzxfCV6mU2zj59XMWVVhl7r6QkcopoLCblZqmJv9N4e8+ov1/S
-	ZphUgF66NIiGVWY0vmEOpW2DDvfM9D6OqRuX4BEXyPZF5qDF6+yQSaWWJ9kTfLrmkWRvlCkszoRmZ
-	VBmQtLBOK2LDHB2CDRVomMU1ynX3Q==;
-Received: from [10.20.10.231] (port=48818 helo=mail.cyon.ch)
-	by s075.cyon.net with esmtpa (Exim 4.96.2)
-	(envelope-from <nussgipfel@brain4free.org>)
-	id 1tX3WJ-0007YK-0a
-	for lch@lists.linux.dev;
-	Sun, 12 Jan 2025 20:21:11 +0100
-Date: Sun, 12 Jan 2025 20:21:10 +0100
-From: Christoph Zimmermann <nussgipfel@brain4free.org>
-To: Linux CH <lch@lists.linux.dev>
-Subject: In search for reviewer/tester for Risc-V JH7110/Star64
-Message-ID: <20250112202110.64d3a9d2@fastfrinz>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-pc-linux-gnu)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RNqYDjnB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A302BC4CEE1;
+	Mon, 13 Jan 2025 09:11:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1736759470;
+	bh=Mubet9KBzwKA6Udzb9XLTcym3xHc1dZD3Qx5T552y0M=;
+	h=Date:Subject:To:References:From:In-Reply-To:From;
+	b=RNqYDjnBt1PIdOILWcTivd9/8IX3mGCnU6albov1JI60aO4EFFdBEqyi6w2odqfn1
+	 ovQtlcCUzk7EzLMXn7bBi7dcrsNMBa4R5yTEW6au6wAMJzo8xts6M6FmCdm4GmSSt6
+	 +3hBbqOYJTNJkus/mRf8ymhOlmKzOp9651pEZ9esUuEIKXa9DE/biKPSDOBArJw+EI
+	 XXtMlMBleGAHOTGd6CjqwIk89/F36oonTo0F2Y9oKil0QCU6VqvkCEl2iOkBZG4aiw
+	 004Z8XFSXAWEz6j380syAYHG3uhe6p5p9VFrZaAy0QfHwg+Hvny4LQA0b08rRZ2vlS
+	 +VQ3ixYttLlDg==
+Message-ID: <105e6a2d-5d5d-42ec-810c-649d421d4ecd@kernel.org>
+Date: Mon, 13 Jan 2025 10:11:07 +0100
 Precedence: bulk
 X-Mailing-List: lch@lists.linux.dev
 List-Id: <lch.lists.linux.dev>
 List-Subscribe: <mailto:lch+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lch+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+Subject: Re: In search for reviewer/tester for Risc-V JH7110/Star64
+To: Christoph Zimmermann <nussgipfel@brain4free.org>,
+ Linux CH <lch@lists.linux.dev>
+References: <20250112202110.64d3a9d2@fastfrinz>
+Content-Language: en-US
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20250112202110.64d3a9d2@fastfrinz>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - s075.cyon.net
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - brain4free.org
-X-Get-Message-Sender-Via: s075.cyon.net: authenticated_id: nussgipfel@brain4free.org
-X-Authenticated-Sender: s075.cyon.net: nussgipfel@brain4free.org
 
-Hi
+On 12/01/2025 20:21, Christoph Zimmermann wrote:
+> Hi
+> 
+> I ask here for a friend. He achieved quite some progress in bringing
+> missing pieces of the Risc-V JH7110 SoC to mainline and/or bugfixing
+> dts stuff.
+> 
+> Problem is now that he needs reviewers/testers and it seems that only
+> few can do that or are missing hardware.
+> 
+> "they need participation, even if it is only "Tested-by"
 
-I ask here for a friend. He achieved quite some progress in bringing
-missing pieces of the Risc-V JH7110 SoC to mainline and/or bugfixing
-dts stuff.
 
-Problem is now that he needs reviewers/testers and it seems that only
-few can do that or are missing hardware.
+I forwarded your message to friend who does some work around mainline
+RISC-V and was looking for some involvement, although nothing related to
+Switzerland so no hardware shipment.
 
-"they need participation, even if it is only "Tested-by"
-some of the patches need a deep understanding of JH7110, and it may be
-such technical knowledge that a competent Linux developer will give us
-advice how we can find answers for our questions most of the patches
-are simple and can be easily examined and tested for, if having JH7110
-hardware (like Star64) one example of easy to test
-patch: https://lore.kernel.org/lkml/20250102194530.418127-5-e@freeshell.de/
-"
+> some of the patches need a deep understanding of JH7110, and it may be
+> such technical knowledge that a competent Linux developer will give us
+> advice how we can find answers for our questions most of the patches
+> are simple and can be easily examined and tested for, if having JH7110
+> hardware (like Star64) one example of easy to test
+> patch: https://lore.kernel.org/lkml/20250102194530.418127-5-e@freeshell.de/
+> "
 
-The full list of the discussions:
-Liste: https://lore.kernel.org/lkml/?q=star64
+I won't have time, but I admit that such projects are tempting - still
+small community. Not like Rpi, where you send a patch and then discover
+that 10 people already were working on this feature. :)
 
-I my self am far away of being useful for this (I did writing how-to's
-to install Debian and kind of things for this platform) but I have a
-Star64 board and the needed accessories. So if someone in Switzerland
-is interested I'm willing to lend the hardware to someone for this.
-
-All the best and happy hacking in 2025
-Christoph
+Best regards,
+Krzysztof
