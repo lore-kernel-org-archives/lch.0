@@ -1,33 +1,35 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mxout012.mail.hostpoint.ch (mxout012.mail.hostpoint.ch [217.26.49.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 049132343AE
-	for <lch@lists.linux.dev>; Mon, 13 Jan 2025 09:11:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E36820766F
+	for <lch@lists.linux.dev>; Sat, 25 Jan 2025 12:40:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.26.49.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736759471; cv=none; b=a0RjWoCAlVLNpb3ChOH/BGCENiMudkrIjafr4wSej/QengbjQjpO2LP4XkXsdTIk0BH4OCZbMTJKLv8qFLlujREmBvZRALulekk01L9rLFfy6bWfKPzDnfSylGzK2PRuSJH6styVB18+oHkk7QfKLQF8h/xpDReQq57rZaMohk0=
+	t=1737808851; cv=none; b=L2P5fWspW8zYlkSfi5EIyEBfDn9ddjl21a+n10ikczDK9/Qh0VIL8FvfIUi4IRzb0OaFPqWWIbixSsdKakNGK0Y9tiqij0NtyXFZArfzlnIRBPkeFG0hGIsJcsd5AmzVnbtUQOOI6ZL1zJG0lqrf7JltH+vU7+PXNindaNJlOa0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736759471; c=relaxed/simple;
-	bh=Mubet9KBzwKA6Udzb9XLTcym3xHc1dZD3Qx5T552y0M=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=g4TRf4NyAFfad9Lx20UewFZsR2n5OURP8MWRG90VyMmu5jVKcUsZNd8+igTJnyuQ/1jEKi4XPHuySHix8jwesAfdcglTOb0arAcdamgJnLSNc5UqTjPOD8Par2pPX1sdOVINHqCgvkgkecHv00oJik77FSnI/RGA8VdJMzRTA5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RNqYDjnB; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RNqYDjnB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A302BC4CEE1;
-	Mon, 13 Jan 2025 09:11:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736759470;
-	bh=Mubet9KBzwKA6Udzb9XLTcym3xHc1dZD3Qx5T552y0M=;
-	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=RNqYDjnBt1PIdOILWcTivd9/8IX3mGCnU6albov1JI60aO4EFFdBEqyi6w2odqfn1
-	 ovQtlcCUzk7EzLMXn7bBi7dcrsNMBa4R5yTEW6au6wAMJzo8xts6M6FmCdm4GmSSt6
-	 +3hBbqOYJTNJkus/mRf8ymhOlmKzOp9651pEZ9esUuEIKXa9DE/biKPSDOBArJw+EI
-	 XXtMlMBleGAHOTGd6CjqwIk89/F36oonTo0F2Y9oKil0QCU6VqvkCEl2iOkBZG4aiw
-	 004Z8XFSXAWEz6j380syAYHG3uhe6p5p9VFrZaAy0QfHwg+Hvny4LQA0b08rRZ2vlS
-	 +VQ3ixYttLlDg==
-Message-ID: <105e6a2d-5d5d-42ec-810c-649d421d4ecd@kernel.org>
-Date: Mon, 13 Jan 2025 10:11:07 +0100
+	s=arc-20240116; t=1737808851; c=relaxed/simple;
+	bh=q1a6MCULQqxACV09Vp9UghIuqaIAPzbYfxw8p2oyxXU=;
+	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=JNuGAX8zRUsJgIgEqaRB07ivOmriZcXU1hhwsLano8ojO34V10Ow0ixLx5J1f+NhbTNiVufmzy3tiNUb186FYnXRZsZdcbSuqLKyc9vey0SfdD+0EnPVpUaL4uSbfbWh3FN8l0HTwj1FOig4WDuig4rynlXh3t1uO4zWsxl/OsU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=reto-schneider.ch; spf=pass smtp.mailfrom=reto-schneider.ch; arc=none smtp.client-ip=217.26.49.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=reto-schneider.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=reto-schneider.ch
+Received: from [10.0.2.46] (helo=asmtp013.mail.hostpoint.ch)
+	by mxout012.mail.hostpoint.ch with esmtps  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.98 (FreeBSD))
+	(envelope-from <mail@reto-schneider.ch>)
+	id 1tbfRm-00000000GvQ-1Obh
+	for lch@lists.linux.dev;
+	Sat, 25 Jan 2025 13:39:34 +0100
+Received: from [2a02:16a:3e26:1:ca96:9d95:4eae:172b]
+	by asmtp013.mail.hostpoint.ch with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.98 (FreeBSD))
+	(envelope-from <mail@reto-schneider.ch>)
+	id 1tbfRm-00000000BCl-0iUL
+	for lch@lists.linux.dev;
+	Sat, 25 Jan 2025 13:39:34 +0100
+X-Authenticated-Sender-Id: reto-schneider@reto-schneider.ch
+Message-ID: <c330ed96-3ba3-41c2-b7d3-e912ae6ac75e@reto-schneider.ch>
+Date: Sat, 25 Jan 2025 13:39:33 +0100
 Precedence: bulk
 X-Mailing-List: lch@lists.linux.dev
 List-Id: <lch.lists.linux.dev>
@@ -35,87 +37,100 @@ List-Subscribe: <mailto:lch+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lch+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: In search for reviewer/tester for Risc-V JH7110/Star64
-To: Christoph Zimmermann <nussgipfel@brain4free.org>,
- Linux CH <lch@lists.linux.dev>
-References: <20250112202110.64d3a9d2@fastfrinz>
+To: Linux CH <lch@lists.linux.dev>
 Content-Language: en-US
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20250112202110.64d3a9d2@fastfrinz>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From: Reto Schneider <mail@reto-schneider.ch>
+Subject: Linux'n'Beer at FOSDEM
+Autocrypt: addr=mail@reto-schneider.ch; keydata=
+ xjMEXsRRExYJKwYBBAHaRw8BAQdAvw3GH8aeA8Pay1QqPdjlETAUDAa8WmHHXZRDk5a0DHbN
+ J1JldG8gU2NobmVpZGVyIDxtYWlsQHJldG8tc2NobmVpZGVyLmNoPsKYBBMWCgBAAhsDCAsJ
+ DQgMBwsKBRUKCQgLBBYDAgECHgECF4AWIQQ/b+1tpIOf0oCRNDK/uT6PQiWG4AUCZIhQWwUJ
+ C2eZyAAKCRC/uT6PQiWG4OfmAPoDN/TrhVCGZYZ9S+AFHfgL0SuviLL+/VcN888p21NN9gD6
+ A5k9a97efFcKmDw1yDbCzYp0kZwoRn+w6gkR8aEKjQ/OOARexFETEgorBgEEAZdVAQUBAQdA
+ 6PW5+rUjfrKbl3623SR35Drobzij2XjkGFY6zswMz3EDAQgHwn4EGBYKACYCGwwWIQQ/b+1t
+ pIOf0oCRNDK/uT6PQiWG4AUCZIhQawUJC2eZ2AAKCRC/uT6PQiWG4HJ1AQDKaQ6c8BZuH2zu
+ 41ik49RnS3p8dRDTKIMj6G9lv8ysLAD/fLo1nSZ2dHxl6u9/zyx+cYU5GV4SQOLl6CpjgRCj vwA=
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------6L8mI8w0wLVmyE8sq1vC7mBr"
+X-Vs-State: 0
 
-On 12/01/2025 20:21, Christoph Zimmermann wrote:
-> Hi
-> 
-> I ask here for a friend. He achieved quite some progress in bringing
-> missing pieces of the Risc-V JH7110 SoC to mainline and/or bugfixing
-> dts stuff.
-> 
-> Problem is now that he needs reviewers/testers and it seems that only
-> few can do that or are missing hardware.
-> 
-> "they need participation, even if it is only "Tested-by"
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------6L8mI8w0wLVmyE8sq1vC7mBr
+Content-Type: multipart/mixed; boundary="------------c3EhlAXy3E98d5ECgfP0kn3j";
+ protected-headers="v1"
+From: Reto Schneider <mail@reto-schneider.ch>
+To: Linux CH <lch@lists.linux.dev>
+Message-ID: <c330ed96-3ba3-41c2-b7d3-e912ae6ac75e@reto-schneider.ch>
+Subject: Linux'n'Beer at FOSDEM
 
+--------------c3EhlAXy3E98d5ECgfP0kn3j
+Content-Type: multipart/mixed; boundary="------------yRmqZbtkE0akknZ0b5Z07Mt4"
 
-I forwarded your message to friend who does some work around mainline
-RISC-V and was looking for some involvement, although nothing related to
-Switzerland so no hardware shipment.
+--------------yRmqZbtkE0akknZ0b5Z07Mt4
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-> some of the patches need a deep understanding of JH7110, and it may be
-> such technical knowledge that a competent Linux developer will give us
-> advice how we can find answers for our questions most of the patches
-> are simple and can be easily examined and tested for, if having JH7110
-> hardware (like Star64) one example of easy to test
-> patch: https://lore.kernel.org/lkml/20250102194530.418127-5-e@freeshell.de/
-> "
+SGkgYWxsLA0KDQpBbnlvbmUgZ29pbmcgdG8gRk9TREVNIGFuZCB1cCBmb3Igc29tZSBMaW51
+eCduJ0JlZXI/DQoNCkknbGwgYXJyaXZlIGluIEJydXNzZWwgb24gMjAyNS0wMS0yOCBhbmQg
+bGVhdmUgb24gMjAyNS0wMi0wMy4gTm8gcmVhbCANCnBsYW5zIHlldCBmb3IgdGhlIGV2ZW5p
+bmdzLg0KDQpMRw0KUmV0bw0K
+--------------yRmqZbtkE0akknZ0b5Z07Mt4
+Content-Type: application/pgp-keys; name="OpenPGP_0xBFB93E8F422586E0.asc"
+Content-Disposition: attachment; filename="OpenPGP_0xBFB93E8F422586E0.asc"
+Content-Description: OpenPGP public key
+Content-Transfer-Encoding: quoted-printable
 
-I won't have time, but I admit that such projects are tempting - still
-small community. Not like Rpi, where you send a patch and then discover
-that 10 people already were working on this feature. :)
+-----BEGIN PGP PUBLIC KEY BLOCK-----
 
-Best regards,
-Krzysztof
+xjMEXsRRExYJKwYBBAHaRw8BAQdAvw3GH8aeA8Pay1QqPdjlETAUDAa8WmHHXZRD
+k5a0DHbNJ1JldG8gU2NobmVpZGVyIDxtYWlsQHJldG8tc2NobmVpZGVyLmNoPsKY
+BBMWCgBAFiEEP2/tbaSDn9KAkTQyv7k+j0IlhuAFAl7EURMCGwMFCQWjmoAICwkN
+CAwHCwoFFQoJCAsEFgMCAQIeAQIXgAAKCRC/uT6PQiWG4IsVAP9xonMRrcrTBWFx
+PMjEYVWUMHi8BssqkzMdc1QQXwpCKwEAqdBF1odOUr4SUHVQmadIE5eRpF9MbyBM
+QdR3ms8DrQ7CmAQTFgoAQAIbAwgLCQ0IDAcLCgUVCgkICwQWAwIBAh4BAheAFiEE
+P2/tbaSDn9KAkTQyv7k+j0IlhuAFAmRIQLcFCQsniiQACgkQv7k+j0IlhuCUSgEA
+5nUr/Gz+2xpHTs10+eScYUEuBgJHXZUWfMyGnwrgAo0A/R6kKe8dDIwGje9VRSbp
+TukS4NX1RFyDi3XLF5gufxMCwpgEExYKAEACGwMICwkNCAwHCwoFFQoJCAsEFgMC
+AQIeAQIXgBYhBD9v7W2kg5/SgJE0Mr+5Po9CJYbgBQJkiFBbBQkLZ5nIAAoJEL+5
+Po9CJYbg5+YA+gM39OuFUIZlhn1L4AUd+AvRK6+Isv79Vw3zzynbU032APoDmT1r
+3t58VwqYPDXINsLNinSRnChGf7DqCRHxoQqND844BF7EURMSCisGAQQBl1UBBQEB
+B0Do9bn6tSN+spuXfrbdJHfkOuhvOKPZeOQYVjrOzAzPcQMBCAfCfgQYFgoAJhYh
+BD9v7W2kg5/SgJE0Mr+5Po9CJYbgBQJexFETAhsMBQkFo5qAAAoJEL+5Po9CJYbg
+jIcBAKqaPAFMbJUB8tk5VBJQ+pKW79EZwJY9AURc/4F7aZ01AQDTlJwrj4aABKFU
+TzBQ5tumN2X+7l2NkXyEQZBHcp5XC8J+BBgWCgAmAhsMFiEEP2/tbaSDn9KAkTQy
+v7k+j0IlhuAFAmRIQNYFCQsnikMACgkQv7k+j0IlhuACqgD8CwtIHg39qTQZkswc
+nMuoN/DEuu56wyLPUkqcBAgsjZoA/iMB02ns0iAz4vEVk4MHFOk5qR0Gqbe4N5cV
+SB5w22kCwn4EGBYKACYCGwwWIQQ/b+1tpIOf0oCRNDK/uT6PQiWG4AUCZIhQawUJ
+C2eZ2AAKCRC/uT6PQiWG4HJ1AQDKaQ6c8BZuH2zu41ik49RnS3p8dRDTKIMj6G9l
+v8ysLAD/fLo1nSZ2dHxl6u9/zyx+cYU5GV4SQOLl6CpjgRCjvwDOMwRexFexFgkr
+BgEEAdpHDwEBB0AjMM+kNm6MHogUBZyw8FuwAQmrk0Lmi2zdpsq7oWHKwcJ+BBgW
+CgAmFiEEP2/tbaSDn9KAkTQyv7k+j0IlhuAFAl7EV7ECGyAFCQWjmoAACgkQv7k+
+j0IlhuDdEgD+M9hze+TTi/FPqizlk0DRwVvnmQoxDr4R1dJ4R+mbhOUA/RyffTQE
+k6kRiSSVOjwT6Wk2nltenFOBj3gi2zsFnCkHwn4EGBYKACYCGyAWIQQ/b+1tpIOf
+0oCRNDK/uT6PQiWG4AUCZEhA1gUJCyeDpQAKCRC/uT6PQiWG4HrJAQC1Rzq67W6E
+aC4qEAAlXMhxOdNLrzxeFiD414TiMFc0egD9FpM15cQwo8OA2C19AciIIa26kkZs
+k7ma9LDY+j4feQDCfgQYFgoAJgIbIBYhBD9v7W2kg5/SgJE0Mr+5Po9CJYbgBQJk
+iFBsBQkLZ5M6AAoJEL+5Po9CJYbgWmUBAMbBIBosfdFWYBVE3+5UpsWhEWOTqE4n
+vHX1kEsaPWYGAQDray/mQ+uUZCkAoVeqHvdcmEMyYy+3HlKwLBfNGqBVDQ=3D=3D
+=3Dd7WB
+-----END PGP PUBLIC KEY BLOCK-----
+
+--------------yRmqZbtkE0akknZ0b5Z07Mt4--
+
+--------------c3EhlAXy3E98d5ECgfP0kn3j--
+
+--------------6L8mI8w0wLVmyE8sq1vC7mBr
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEARYIAB0WIQQ/b+1tpIOf0oCRNDK/uT6PQiWG4AUCZ5TbhQAKCRC/uT6PQiWG
+4Pp1AP9Ch+GYS13oJwBJRMf2H6qZMs4CVrgVTApj+Cvnyu5epgD/WWzaCXqLfGAW
+0+bi1igV2wY/PUzNQ/TJ8AWzkXSZLAM=
+=D7Js
+-----END PGP SIGNATURE-----
+
+--------------6L8mI8w0wLVmyE8sq1vC7mBr--
