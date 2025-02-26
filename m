@@ -1,119 +1,97 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B57B22A4DE
-	for <lch@lists.linux.dev>; Fri, 14 Feb 2025 09:01:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7590A85931
+	for <lch@lists.linux.dev>; Wed, 26 Feb 2025 12:35:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739523681; cv=none; b=SzmZIQWJXqhBWqZf0RQYZUj9wR3StOnUZL6ZWA29KSL/TDoCXJFiYpZ3cA9PF88k67U9gBDFDSN5VePurUMWzv4Qg3si7PVfKYDypgL7weNLTu3YylBQBs87P9+ZzliEMsy0LV5+VL7gIrfGAec+ZHGAcy6szj3VSBvTzPtFmiU=
+	t=1740573338; cv=none; b=qQLAqPi8EkbagL919pRhUOfyQ0OHqK/AINV8eZj9op/exzm15uFc2QoK+3yUCRQ2mtoAPCHeZ5ZHBGBNMuZ7w7ev85lK3U82PgRxSk/dwYcHyK/ka0Faf+nn6z5dUM6PQ1iGHFEc7qMHrmPRQslU/x+Qu/xgCJwFm7WsD9ntc6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739523681; c=relaxed/simple;
-	bh=U6LmW0Z4TNxVbRlYgMdM4lVX70kXymwSK311vm9O3IM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=OfBpO+HqvlQ8m7S56Hf0NrOz2HUpszPl3pH4gBkMZNj+VOYK2xKzGpBXYWkUwOGBpX5HH+qQOT1Nt5ym4oFqCPE5oj52BPLHZVlhBlltk3eA/wd82IIXGj8mWyUE/EFP9InhSPTXLAKLXYaJWh8r7CvJx11TBml1m6p0utYVbEE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=etP3LqY2; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1740573338; c=relaxed/simple;
+	bh=Cm9E9YWW6Vz5RNXVvaT54k0YwPFLcjFk7+Svi/J8B5c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fK/aylRZHiCFVkbsafqhWCBqzjSDL1aKGJfknrsQ3IGFNmy/QV0c1VWk5cG6xsVjEEAHMB4zugfh5HN08+gDAvzWaiRgzWj6ULZ+CJ4UaEZsVhv4ZVwg5Pcdufrof2xFT4G/LjniRUpGNMa9p09pbk8V4ljGqyccwdcvJp2uF9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R/O0vNjX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="etP3LqY2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C05CC4CED1;
-	Fri, 14 Feb 2025 09:01:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R/O0vNjX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35FABC4CEE8;
+	Wed, 26 Feb 2025 12:35:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1739523678;
-	bh=U6LmW0Z4TNxVbRlYgMdM4lVX70kXymwSK311vm9O3IM=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=etP3LqY2OW3aRPQT+sQ6eSwW7dHIWYGckFx+a1TZx+oX2Gcg/pClmDFcgb1wwGYdw
-	 rcyFEmLySm54uOD6awQSSIO83TIXxz5RH0t7bTlU5AQSeS5RNod9OUItTfgTNQs1av
-	 yPQwYRI1Cp5caXZd1bFL97d3m/9C/hTDRsh7NQxlg6vnzrlyfJl+nj73VNeWUxURp5
-	 fB5xjakIFuytLxtfB34UV54VLQCYA1BltHYnxaPEh5DdhjUwCv5l6PGbYqOmj1WCFe
-	 CpaG445vF+vGWV+ByD/Rk8/Nxf4UcCya9orww1pKcT/oSdkYb3MpZKb/P5MQvuTvWr
-	 W2rrRDPQGUTaA==
-Message-ID: <ab2b879f-e6f3-4f24-85d0-2c093b37d1d7@kernel.org>
-Date: Fri, 14 Feb 2025 10:01:14 +0100
+	s=k20201202; t=1740573337;
+	bh=Cm9E9YWW6Vz5RNXVvaT54k0YwPFLcjFk7+Svi/J8B5c=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=R/O0vNjXD/Bsk0atqHB8fmXHRK5p5MptO/0gmkpQUvpPZbAC2SAbCeGOkuQxatoe9
+	 rVFcGz0TFILH5KDwHI7zGqWQ2um6knQCIxP8eb49LY5NxE410oZTXJ5SzJqRffNZY9
+	 gHTYiWe/+Sz0x7+SpgxDAfczJmf2VkkX4XRKXHLUhd5SQnG75PMoZWI6kuy/S9bS3O
+	 xv+VIu3mgkekIJxfR28KM+Q0G9Yh2ZKCBBP+8c2x3KvNFrtkXYwe6gWua7DzfKScY2
+	 fCwerQAf/7LpCCH/xRhhVZkwS6+TDCyZgvNDvcy5WMLeKhFcFbZVYfmw9CCOIz4t5Y
+	 zMib93wLn+SIQ==
+Date: Wed, 26 Feb 2025 13:35:33 +0100
+From: Andi Shyti <andi.shyti@kernel.org>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Linux CH <lch@lists.linux.dev>, Enrico Zanda <e.zanda1@gmail.com>, 
+	Peter Senna Tschudin <peter.senna@gmail.com>
+Subject: Re: Linux'n'Beer v4
+Message-ID: <6cbpcgfvlaweqvomhnievvmz37kppx72q65ocednudfkjeligv@et2uh5nlyuwe>
+References: <fdvjjgjrpshezzpmt3ys2i2objgldn7qjozr6srt2tjbcikgcp@wp7xwemcei46>
+ <ab2b879f-e6f3-4f24-85d0-2c093b37d1d7@kernel.org>
 Precedence: bulk
 X-Mailing-List: lch@lists.linux.dev
 List-Id: <lch.lists.linux.dev>
 List-Subscribe: <mailto:lch+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lch+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Linux'n'Beer v4
-To: Andi Shyti <andi.shyti@kernel.org>, Linux CH <lch@lists.linux.dev>
-Cc: Enrico Zanda <e.zanda1@gmail.com>
-References: <fdvjjgjrpshezzpmt3ys2i2objgldn7qjozr6srt2tjbcikgcp@wp7xwemcei46>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <fdvjjgjrpshezzpmt3ys2i2objgldn7qjozr6srt2tjbcikgcp@wp7xwemcei46>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ab2b879f-e6f3-4f24-85d0-2c093b37d1d7@kernel.org>
 
-On 13/02/2025 15:54, Andi Shyti wrote:
-> Hi everyone,
+Hi Everyone,
+
+On Fri, Feb 14, 2025 at 10:01:14AM +0100, Krzysztof Kozlowski wrote:
+> On 13/02/2025 15:54, Andi Shyti wrote:
+> > I'm pretty happy that I won't be editing emails for the next
+> > Linux'n'Beer call!
+> > 
+> > Last time, I heard some excitement about meeting in Lugano. Since
+> > I'm currently injured and hobbling around on crutches, I fully
+> > support the idea and officially propose Lugano as our next
+> > meeting spot.
+> > 
+> > That said, I'd rather not end up alone at the pub, drinking beer
+> > and passionately telling myself how cool kernel programming is.
+> > So, I'd like to invite Krzysztof to set up a Doodle poll and see
+> > if we'd have enough people for Lugano.  If not, we can always
+> > fall back to Zurich.
+> > 
 > 
-> I'm pretty happy that I won't be editing emails for the next
-> Linux'n'Beer call!
+> OK, so the vote for Lugano:
 > 
-> Last time, I heard some excitement about meeting in Lugano. Since
-> I'm currently injured and hobbling around on crutches, I fully
-> support the idea and officially propose Lugano as our next
-> meeting spot.
+> https://doodle.com/group-poll/participate/aOLBLyQb
 > 
-> That said, I'd rather not end up alone at the pub, drinking beer
-> and passionately telling myself how cool kernel programming is.
-> So, I'd like to invite Krzysztof to set up a Doodle poll and see
-> if we'd have enough people for Lugano.  If not, we can always
-> fall back to Zurich.
-> 
+> I cannot find in Doodle any option which would distinguish between
+> "never read your email" and "I won't come to Lugano", so let's assume
+> such cases as equal - no votes means either you do not care or you do
+> not want/plan/can come to Lugano.
 
-OK, so the vote for Lugano:
+the poll is closed, and the vote has decided: we're meeting in
+Lugano on Friday, March 14th.
 
-https://doodle.com/group-poll/participate/aOLBLyQb
+I don't expect a huge number of attendees this time, but
+switching location could be a nice change from time to time
+(plus, I'm still hobbling around on crutches).
 
-I cannot find in Doodle any option which would distinguish between
-"never read your email" and "I won't come to Lugano", so let's assume
-such cases as equal - no votes means either you do not care or you do
-not want/plan/can come to Lugano.
+Of course, there's still time to make up your mind and join at
+the last minute. And, as always, feel free to invite anyone you
+think might be interested.
 
-Best regards,
-Krzysztof
+I'll send another update with the exact place and time later and
+perhaps gather a few more attendees.
+
+Lugano isn't as rich in pubs as Zurich, and options are more
+limited, so I'll take the lead this time in choosing the venue.
+I think I have a good overview of what the city has to offer in
+terms of beer!
+
+Looking forward to it!
+
+Andi
