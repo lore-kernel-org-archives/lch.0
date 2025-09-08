@@ -1,111 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA1671C84A1
-	for <lch@lists.linux.dev>; Sat,  6 Sep 2025 07:55:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58C1F2F3C28
+	for <lch@lists.linux.dev>; Mon,  8 Sep 2025 10:38:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757145357; cv=none; b=AX3ViBeDcMmFXucgLLr54MvSgQwmkAImGAsuqfO2NwM2WznbvznL8w09BPNvVg1sDa+LTeSh17OTQmPbyujLDQG3XqCJGdMhM/c1ad/o/qNzbMybOWFtbiOKefVCDCQJTqbmpsW1KH5xOZYYE98F1lTblzjgikjHQ0CIlxUCVB8=
+	t=1757327884; cv=none; b=uD91aaZAaWQ9ii1tf2kojQITrFYV+20j5sLeiK53DMIzOD4gedCS1v/lQ9hQ4EG2DCZI8lX6nOVqn5zmDXbrSSP3Vn9JOirLPhAdevSenUu/4ofmxfWHk6RIkYee7ENaxZODlSbyENj3qAqXxg0yxQu3SmmYvqWD9lpFRszwEkg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757145357; c=relaxed/simple;
-	bh=OVjBALkPLV+hVkKwxTf2NNUHGWnrvF1OM4aJUN94ouw=;
-	h=Message-ID:Date:MIME-Version:From:To:Subject:Content-Type; b=oVSe7LXN+KGZKribn6ktp7Ln+vwL+trq/a29HohlUZQiHzUq1BNxcHyQ46yef7936G8iI3AngzcXwv83WJWuAjEwaaaWNauh7AaXlMkcX6Rntuuxwpc8CWFjNDJ7YaIXsgdec3oo61KSkkq77HhkPXqpbFKakRxtSsqCvVN14MQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ew0e62wP; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1757327884; c=relaxed/simple;
+	bh=DuImEo/m5KfoTLKKIiIz02tA7bs2sRB6aMMe3ET0G2I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AyRGVTtIuNVaXboSiSh4HpgEe2UgCRNvTB2JQCsyGQUSaWImaZhz2HkLaXdwGt54jbY++nuHDwNdIAxX1vtosRUPljAp2CfMrd53TGdxwE/a8RUh2sWGpKF6drA6fAjT7YSlYaK7YVp/qLO9V25jdVKTVbplCazu0hm7iJhXfig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aLSgy6qs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ew0e62wP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A548C4CEF8;
-	Sat,  6 Sep 2025 07:55:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aLSgy6qs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63775C4CEF1;
+	Mon,  8 Sep 2025 10:38:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757145357;
-	bh=OVjBALkPLV+hVkKwxTf2NNUHGWnrvF1OM4aJUN94ouw=;
-	h=Date:From:To:Subject:From;
-	b=ew0e62wPVVjVRMgf9eNArT7zw0IZ+kELdekP3qq5WpklhpA+HblHD9Ip2W6wEPJtN
-	 hU+Gvl7tDOdqjeDSAsKUY9WCHQWRWXKj7DMxiuSrEhZ6KRQ4wAFT8EHPnB1ckuUe02
-	 qBaK9U4YuiBNayTHt4IlcJ9zMttcs2PiG9i7b0YUryz0rRjL7vgc3PRlYrw+UGaKPB
-	 wikAYXlPXRQavOyUKPoquQeClN1L1KyPZ/RSxTLxNIENbxyNz2tixB8woQfvqqljjU
-	 k24PH4Om85fflusP7zohqDjlnxSqmCzLS4k5+Jv7AVVD33Wo6YhfV9+Niap08za73x
-	 nGgVIGBqCVcBA==
-Message-ID: <0ae7aed1-3171-4e3e-bef6-afaa90fb6d3f@kernel.org>
-Date: Sat, 6 Sep 2025 09:55:54 +0200
+	s=k20201202; t=1757327884;
+	bh=DuImEo/m5KfoTLKKIiIz02tA7bs2sRB6aMMe3ET0G2I=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=aLSgy6qsW94s/3s4Y97QjL6WbYU7jj0Xl3+iAkv7EWKcedOMjzpkAaulOuztTIJLq
+	 E2XxXw3uuVr82WwnS+5ZpNz5LIDvwARr6rF2oF6OOoXFgJj97Kk+A+p+B80IxLX7a5
+	 6HE4/YkeG+Kk/K01yjjVDSFm3PUCIOvhiqAYcVW/bT952oS/T+sA3liCJcyed3azvl
+	 e/q+/Yjh9hDkJvvaQZa1R3euh+M2s2LeZWEUdEcAMTkEaqG1UgeJAE7CcnX114IlqH
+	 NAcFCHX7k84Uu+8LYwIvWRs4NQ2GoBvOrkCtCg9eFZlbhhEdoWJKuo3YRYK9Wtj/g5
+	 5GUk31Z4dWeRg==
+Date: Mon, 8 Sep 2025 12:37:59 +0200
+From: Andi Shyti <andi.shyti@kernel.org>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Linux CH <lch@lists.linux.dev>
+Subject: Re: Next Linux'n'Beer (v5)
+Message-ID: <t5zmh5wqbkpn5zqtr2jtusd22m6exaelsdruy6apwi3gnpnwvv@wgfzu63pgqec>
+References: <0ae7aed1-3171-4e3e-bef6-afaa90fb6d3f@kernel.org>
 Precedence: bulk
 X-Mailing-List: lch@lists.linux.dev
 List-Id: <lch.lists.linux.dev>
 List-Subscribe: <mailto:lch+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lch+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-To: Linux CH <lch@lists.linux.dev>, Andi Shyti <andi.shyti@kernel.org>
-Subject: Next Linux'n'Beer (v5)
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0ae7aed1-3171-4e3e-bef6-afaa90fb6d3f@kernel.org>
 
-Hey everyone!
+> When: Friday, 12th Sep, 18:00
+> (if you come before me, table is booked on my name)
+> Where: Bierwerk Zuri, https://maps.app.goo.gl/unN5AkKQUVj6DQ3H6
 
-We are organizing another Linux'n'Beer meeting:
+Thanks Krzysztof for organizing it! See you all there.
 
-When: Friday, 12th Sep, 18:00
-(if you come before me, table is booked on my name)
-Where: Bierwerk Zuri, https://maps.app.goo.gl/unN5AkKQUVj6DQ3H6
-
-
-The place is known of good beer and they also have some beer-food
-(snacks, focaccia), but don't expect proper dinner served.
-
-Please kindly let me know if you plan to come, so I will adjust the
-table booking if necessary.
-
-
-Feel free to forward this invitation further. Also encourage them to
-sign up to this mailing list:
-https://subspace.kernel.org/lists.linux.dev.html
-
-and join IRC #linuxnbeer-ch (on Libera)
-
-Best regards,
-Krzysztof
-
+Andi
