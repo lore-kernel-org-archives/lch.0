@@ -1,33 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CF40481B1
-	for <lch@lists.linux.dev>; Sun, 26 Oct 2025 17:07:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F2BD3446BC
+	for <lch@lists.linux.dev>; Mon, 17 Nov 2025 21:14:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761498454; cv=none; b=nCBypeppHpseMkmDTaeAqVBvm94FKbGgx5NhcZ6KiJzRGZHIpxh0HBXBH4JaTZAeEWN4bLlplyKgxOl9FQu0g1TsehtjzKuVPLruhHMBwZnc3e96BgoBTMODGSviSkbJLmFGitbCUb6zn3+XhUGZ40BxUSywcgZuvwtLg4YlQKs=
+	t=1763414097; cv=none; b=FadIBOoLqEE23C7UbcdvFBM3My0HibheGZxIGq75HOZ/RsjQyPU6vwTCK+XH1bbfgKuvwrP/sMOn64co2G5aOGbbQglkH9gdHlVVOQnxjHmz7sDkmBHe93Cc63AUPwdLV5z+mj7NN5rN8SVRoyrcKo/F6ns9Dk8cBvknuyDvdis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761498454; c=relaxed/simple;
-	bh=FTWIAwhzrMph/Z5xaWQkDqCdkcoqOiHH6Y808+9ZsP4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KewQZwDbQH1X8pVXHgY1iDwPBl8g4nCa3DXAvAFnvG7GzW1EB8cQv7C4ARVu2vTiWqHthNFQYEKVThZHElgQq/u0XrDgYW+Q4O54P6yuWrFrOBeFTzP9jNoknyT0tE5lwr5RFf5zZdUODR7JS7O7hBFYVHuuO21grzdJ1XzYkMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jfEHVHtQ; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1763414097; c=relaxed/simple;
+	bh=wrffhhIOlGYYG4GNlN0L/wxAKrisymd+q1PHDIC+nJU=;
+	h=Message-ID:Date:MIME-Version:From:To:Subject:Content-Type; b=a47MHselV8+Ymale7Ekg6z2TunpGR0D5yHncFWC3Ppu2i5l9mMRTQObddlGotiMEuAO3R2yZHWBXEd4NRYtMGv1zNWWdnjOErLsHd8Wo/PBvHtvXy9TsY/b5tmliLNaZi8R4oWlCpVybZnEsjdalTtLqmcUrOaGi+6Ho9qoYQOw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h5hhyN/E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jfEHVHtQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EF59C4CEE7;
-	Sun, 26 Oct 2025 17:07:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h5hhyN/E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C69FC2BCB6;
+	Mon, 17 Nov 2025 21:14:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761498454;
-	bh=FTWIAwhzrMph/Z5xaWQkDqCdkcoqOiHH6Y808+9ZsP4=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=jfEHVHtQ8wEXC48LhlxPIW0WR0/jUwX31UwWBhPXp0DWhAbK6hAYXxDKmdwyMW8Yt
-	 FI0sDCoNKMqW6XetGuvXalppuECNkax5nVlNpZAgBH+P65Nl9uKP5sdAn2uBZkpM0s
-	 bEMs0SzCUT39LE+pSnXbrkEqqJj3l03p3eeTUVJkKejYRsjfh+NUVBv1OqHt0s/Zwf
-	 MlhilDV5g/PM36JLPz+2VsdoCZtg4Ajb2bFHaYnQkTKtBIGQuQ+kv7R5jlLxvVLcpy
-	 3e6S6SzDB0px2OEc1WnlMyCLW+9LVD9ttSTa4ahsvlDFMU6KzAeo8RzmCGK/hcsUrd
-	 ZY+iyfRvshzWQ==
-Message-ID: <a03cfb96-4d85-4d2b-b358-70f8b6379dfe@kernel.org>
-Date: Sun, 26 Oct 2025 18:07:31 +0100
+	s=k20201202; t=1763414097;
+	bh=wrffhhIOlGYYG4GNlN0L/wxAKrisymd+q1PHDIC+nJU=;
+	h=Date:From:To:Subject:From;
+	b=h5hhyN/EefdOTi2gJ4QrXKd+WeBqUUHBNIGMe1TAedn9lbQncYI9Z+NdZT/+9QG4f
+	 rCWAdJkCT92bZEJIQZ1rtWhmx8PMMobiXcDdKmE+QA5vJOjn1fPQGd5nziM87IHTDR
+	 UCWOnKQhDkxIANkw0EI3ordGreHvskK2ETYiHH/d4xyvCTDPRy+94IIYs4+8DVPcpR
+	 o5uLZYZmfrdYaTkrxmBWppGu0btccsZHYRRQiElLpF2HAyHNp2sWJG1O1AGA1uancR
+	 5w95efSrMDBX2dWEI74+hU0mO5RgDZPyDyiVJILwiYu+fATRUE+/9KxGTWKpCubMV/
+	 K5k9eNuHx97NQ==
+Message-ID: <73f0845c-b312-4c41-94fe-81a22d70a418@kernel.org>
+Date: Mon, 17 Nov 2025 22:14:53 +0100
 Precedence: bulk
 X-Mailing-List: lch@lists.linux.dev
 List-Id: <lch.lists.linux.dev>
@@ -35,13 +34,10 @@ List-Subscribe: <mailto:lch+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lch+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: Linux'n'Beer (v6)
-To: Andi Shyti <andi.shyti@kernel.org>, Linux CH <lch@lists.linux.dev>
-Cc: Peter Senna Tschudin <peter.senna@gmail.com>
-References: <m3xfotdgerr7pjo7sadxy624pcbf5pp4fasyhbx6r3oalgfjam@vti2aicudpcp>
- <cipyiurvxg4fqec4jsbhhx6bn4h2i3chtqzss33kxbgpihufsq@b4aes5g4zgjq>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
+To: Linux CH <lch@lists.linux.dev>
+Subject: Linux'n'Beer v7
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
@@ -85,42 +81,30 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <cipyiurvxg4fqec4jsbhhx6bn4h2i3chtqzss33kxbgpihufsq@b4aes5g4zgjq>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 22/10/2025 15:45, Andi Shyti wrote:
-> Hi everyone,
-> 
-> It is always a pleasure to organise these events and it is great
-> to see so many of you joining again.
-> 
-> Thanks to everyone who suggested places. I called a few but they
-> were all fully booked. I have to admit it was a bit of a late
-> reservation this time.
-> 
-> In the end I managed to book a table under my name (Andi) for
-> Friday at 7pm at Rheinfelder Bierhalle(*). We have been there
-> once before so you know what to expect.
+Hey everyone,
 
+It is time for another round of Linux'n'Beer, probably the last this year.
 
-Thanks everyone for coming (pity you could not join Andi!), that was
-unexpectedly and positively big group! Happy to see new faces.
+Last because after the proposed times in the poll there will be some
+travel and family visits, thus not easy to schedule a next one.
 
-In case this email was forwarded to you, quick reminder:
+Date: 25th November, Tuesday, in Zurich.
 
-1. You can register at:
-https://subspace.kernel.org/lists.linux.dev.html
-There is a link to subscribe which will lead to composing email.
-Registering is useful as that way you will be notified about next event.
+I will try to book something, but for that I need approximate amount of
+people. Last time we were unexpectedly very, very full!
 
-2. No HTML - neither for subscribing, nor for posting.
+So please let me know if you plan to come, e.g. respond without cc-ing
+lists or on IRC (Libera/#linuxnbeer-ch).
 
-3. We also have IRC channel at Libera (https://libera.chat/): #linuxnbeer-ch
-
-4. Next event... I am thinking of something either just before OSS
-Japan/LPC conferences or squeezing it after these conferences but before
-December holidays. We'll see, maybe I will setup a poll for that.
+Proposals of places are also welcomed, I was thinking about
+Turbinenbraeu Restaurant & Bar:
+https://maps.app.goo.gl/7Rhorx6BAEBHva1V9
+although they do not allow bookings for more than 8 people. This could
+just be precautions or maybe they do not have big tables?
 
 Best regards,
 Krzysztof
+
