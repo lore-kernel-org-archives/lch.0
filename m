@@ -1,32 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F2BD3446BC
-	for <lch@lists.linux.dev>; Mon, 17 Nov 2025 21:14:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3444C1AF4D5
+	for <lch@lists.linux.dev>; Fri, 21 Nov 2025 18:26:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763414097; cv=none; b=FadIBOoLqEE23C7UbcdvFBM3My0HibheGZxIGq75HOZ/RsjQyPU6vwTCK+XH1bbfgKuvwrP/sMOn64co2G5aOGbbQglkH9gdHlVVOQnxjHmz7sDkmBHe93Cc63AUPwdLV5z+mj7NN5rN8SVRoyrcKo/F6ns9Dk8cBvknuyDvdis=
+	t=1763749622; cv=none; b=E9qFfn25/FbA1OJsQcyGpNZYHvtHcUVYBITp3K/o7hTe+v51C0K/oRItc2hYroUKuWo5qvGileO22DKUHxmYNdXyUVx21M/pr9ee8gtWP4RBNf8F74RPQKZa5nTV4Xq6xao/Vae1yMXurUSzInqvlUTAre84/80782cklWI0f3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763414097; c=relaxed/simple;
-	bh=wrffhhIOlGYYG4GNlN0L/wxAKrisymd+q1PHDIC+nJU=;
-	h=Message-ID:Date:MIME-Version:From:To:Subject:Content-Type; b=a47MHselV8+Ymale7Ekg6z2TunpGR0D5yHncFWC3Ppu2i5l9mMRTQObddlGotiMEuAO3R2yZHWBXEd4NRYtMGv1zNWWdnjOErLsHd8Wo/PBvHtvXy9TsY/b5tmliLNaZi8R4oWlCpVybZnEsjdalTtLqmcUrOaGi+6Ho9qoYQOw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h5hhyN/E; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1763749622; c=relaxed/simple;
+	bh=fiOgmEiZY2v2fr+y3K9u6GflGiaWrzNOo9+815TrUDs=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:References:Cc:
+	 In-Reply-To:Content-Type; b=Ui7hMosnkrop9sstiL0GxH4TasfsFq6VV5cDJbGcYj1hTO4MHt2CQZ+gQQEU99pjGIHStX2Td1g4xN0FN0XyDvHNu6W92vsL1xCEXVrnxcP6kThy5IWAQjzYmat/pX62OMRN5rics//qzfmUyiB3eCPUCk3mu52I8XCu26OXOjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GXF+vFeO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h5hhyN/E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C69FC2BCB6;
-	Mon, 17 Nov 2025 21:14:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GXF+vFeO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E03DCC4CEF1;
+	Fri, 21 Nov 2025 18:26:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763414097;
-	bh=wrffhhIOlGYYG4GNlN0L/wxAKrisymd+q1PHDIC+nJU=;
-	h=Date:From:To:Subject:From;
-	b=h5hhyN/EefdOTi2gJ4QrXKd+WeBqUUHBNIGMe1TAedn9lbQncYI9Z+NdZT/+9QG4f
-	 rCWAdJkCT92bZEJIQZ1rtWhmx8PMMobiXcDdKmE+QA5vJOjn1fPQGd5nziM87IHTDR
-	 UCWOnKQhDkxIANkw0EI3ordGreHvskK2ETYiHH/d4xyvCTDPRy+94IIYs4+8DVPcpR
-	 o5uLZYZmfrdYaTkrxmBWppGu0btccsZHYRRQiElLpF2HAyHNp2sWJG1O1AGA1uancR
-	 5w95efSrMDBX2dWEI74+hU0mO5RgDZPyDyiVJILwiYu+fATRUE+/9KxGTWKpCubMV/
-	 K5k9eNuHx97NQ==
-Message-ID: <73f0845c-b312-4c41-94fe-81a22d70a418@kernel.org>
-Date: Mon, 17 Nov 2025 22:14:53 +0100
+	s=k20201202; t=1763749619;
+	bh=fiOgmEiZY2v2fr+y3K9u6GflGiaWrzNOo9+815TrUDs=;
+	h=Date:Subject:From:To:References:Cc:In-Reply-To:From;
+	b=GXF+vFeO4NGOp9kCrthSUgNzg0myFTZqigvFm7OOel7ztM6rgdbQvPl02/Hsvc3wx
+	 zgP0PgLtj5iWhjKneYB9BbL70hu4LVek5CLBlR/md1arWg0gSDZq4xynVoVTSdAqRQ
+	 GE2MC353rpHMLsBQ+Y1VIkGT8MdqCTBaQmiGU0YXExUpYb5lcwNgewSkcRHrWlfGGK
+	 bYP+F+NHHKCaYazXUclP289oFQ2Rhvg7tmVNSA4Po7LxjhSMSKG577vFg7z3z8K0s4
+	 oOGlWcbKA3epfifoihZu54cMfLSKY1Iy0Cag+VxLnd2wtaJ5j45PhMERzPvuPIVy0n
+	 FYzbG1VyCMiDg==
+Message-ID: <1fe547c4-c678-4bec-99e1-f646327da471@kernel.org>
+Date: Fri, 21 Nov 2025 19:26:56 +0100
 Precedence: bulk
 X-Mailing-List: lch@lists.linux.dev
 List-Id: <lch.lists.linux.dev>
@@ -34,10 +35,12 @@ List-Subscribe: <mailto:lch+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lch+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
+Subject: Re: Linux'n'Beer v7
 From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
 To: Linux CH <lch@lists.linux.dev>
-Subject: Linux'n'Beer v7
+References: <73f0845c-b312-4c41-94fe-81a22d70a418@kernel.org>
+Content-Language: en-US
+Cc: Andi Shyti <andi.shyti@kernel.org>
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
@@ -81,30 +84,43 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
+In-Reply-To: <73f0845c-b312-4c41-94fe-81a22d70a418@kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Hey everyone,
+On 17/11/2025 22:14, Krzysztof Kozlowski wrote:
+> Hey everyone,
+> 
+> It is time for another round of Linux'n'Beer, probably the last this year.
+> 
+> Last because after the proposed times in the poll there will be some
+> travel and family visits, thus not easy to schedule a next one.
+> 
+> Date: 25th November, Tuesday, in Zurich.
+> 
+> I will try to book something, but for that I need approximate amount of
+> people. Last time we were unexpectedly very, very full!
+> 
+> So please let me know if you plan to come, e.g. respond without cc-ing
+> lists or on IRC (Libera/#linuxnbeer-ch).
+> 
+> Proposals of places are also welcomed, I was thinking about
+> Turbinenbraeu Restaurant & Bar:
+> https://maps.app.goo.gl/7Rhorx6BAEBHva1V9
+> although they do not allow bookings for more than 8 people. This could
+> just be precautions or maybe they do not have big tables?
 
-It is time for another round of Linux'n'Beer, probably the last this year.
 
-Last because after the proposed times in the poll there will be some
-travel and family visits, thus not easy to schedule a next one.
+I got seven replies so with me it makes 8 people so I booked
+Turbinenbraeu Restaurant/Bar, Badenerstrasse 571, Zürich
+https://maps.app.goo.gl/hCrRsdpCSkkQsAUr7
 
-Date: 25th November, Tuesday, in Zurich.
+Date: 25th November, 18:00 (Tuesday)
+Booking under my name
 
-I will try to book something, but for that I need approximate amount of
-people. Last time we were unexpectedly very, very full!
-
-So please let me know if you plan to come, e.g. respond without cc-ing
-lists or on IRC (Libera/#linuxnbeer-ch).
-
-Proposals of places are also welcomed, I was thinking about
-Turbinenbraeu Restaurant & Bar:
-https://maps.app.goo.gl/7Rhorx6BAEBHva1V9
-although they do not allow bookings for more than 8 people. This could
-just be precautions or maybe they do not have big tables?
+If anyone else would like to come which did not notify me, then of
+course feel welcome but please let me know, so I can adjust the table
+booking.
 
 Best regards,
 Krzysztof
-
