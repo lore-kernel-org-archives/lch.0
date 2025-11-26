@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3444C1AF4D5
-	for <lch@lists.linux.dev>; Fri, 21 Nov 2025 18:26:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7293C2EC0B4
+	for <lch@lists.linux.dev>; Wed, 26 Nov 2025 10:58:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763749622; cv=none; b=E9qFfn25/FbA1OJsQcyGpNZYHvtHcUVYBITp3K/o7hTe+v51C0K/oRItc2hYroUKuWo5qvGileO22DKUHxmYNdXyUVx21M/pr9ee8gtWP4RBNf8F74RPQKZa5nTV4Xq6xao/Vae1yMXurUSzInqvlUTAre84/80782cklWI0f3g=
+	t=1764154703; cv=none; b=s3Ug2VD66+BBxyQMajnF1UJQ8ke7Ba3ZxKWMqn4jMtwtYUQ4g7W2NlHxWSJ0yTGWU+5t4b8S2caeoHWcgWc+7++TzVH0N5pOqUQ+sNNkhqX1kCYHz9hdLLUahEJz7RLAItuePk4qiwO7k/bnL2B2zeMVcaPAtRzIHzE2NZZIhiQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763749622; c=relaxed/simple;
-	bh=fiOgmEiZY2v2fr+y3K9u6GflGiaWrzNOo9+815TrUDs=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:References:Cc:
-	 In-Reply-To:Content-Type; b=Ui7hMosnkrop9sstiL0GxH4TasfsFq6VV5cDJbGcYj1hTO4MHt2CQZ+gQQEU99pjGIHStX2Td1g4xN0FN0XyDvHNu6W92vsL1xCEXVrnxcP6kThy5IWAQjzYmat/pX62OMRN5rics//qzfmUyiB3eCPUCk3mu52I8XCu26OXOjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GXF+vFeO; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1764154703; c=relaxed/simple;
+	bh=ZDs0jTxmZgMvI/hnyv5PjUfTPKOdBOUcJgqawk74fe4=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:References:
+	 In-Reply-To:Content-Type; b=UIJ1tXwGAg5P4/iSNoNlFxoFZzWHKF444Bqe4WyJup1LZPGjK1U4LHv5EoIw1ySEIkFREwKj2ZZTMEmC9xQRrhWmsthdOrz/IDcBVoxqCxIQyhL8ZzctGwEN3GNKNfAQ/flNmRkH2ZuDUSshI1jqkOUTy9xX0QfOMEsQ2570HvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pKT+Ec2C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GXF+vFeO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E03DCC4CEF1;
-	Fri, 21 Nov 2025 18:26:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pKT+Ec2C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C057C113D0;
+	Wed, 26 Nov 2025 10:58:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763749619;
-	bh=fiOgmEiZY2v2fr+y3K9u6GflGiaWrzNOo9+815TrUDs=;
-	h=Date:Subject:From:To:References:Cc:In-Reply-To:From;
-	b=GXF+vFeO4NGOp9kCrthSUgNzg0myFTZqigvFm7OOel7ztM6rgdbQvPl02/Hsvc3wx
-	 zgP0PgLtj5iWhjKneYB9BbL70hu4LVek5CLBlR/md1arWg0gSDZq4xynVoVTSdAqRQ
-	 GE2MC353rpHMLsBQ+Y1VIkGT8MdqCTBaQmiGU0YXExUpYb5lcwNgewSkcRHrWlfGGK
-	 bYP+F+NHHKCaYazXUclP289oFQ2Rhvg7tmVNSA4Po7LxjhSMSKG577vFg7z3z8K0s4
-	 oOGlWcbKA3epfifoihZu54cMfLSKY1Iy0Cag+VxLnd2wtaJ5j45PhMERzPvuPIVy0n
-	 FYzbG1VyCMiDg==
-Message-ID: <1fe547c4-c678-4bec-99e1-f646327da471@kernel.org>
-Date: Fri, 21 Nov 2025 19:26:56 +0100
+	s=k20201202; t=1764154703;
+	bh=ZDs0jTxmZgMvI/hnyv5PjUfTPKOdBOUcJgqawk74fe4=;
+	h=Date:Subject:From:To:References:In-Reply-To:From;
+	b=pKT+Ec2CW12G8gfAXDVhcFA5ymncYNRE0udxrxpM6m694x9pe/D+rWwhBzEQmOpg4
+	 bPIgYoT3aFYQ0ICWb7nS4feb8wyAAMCqoELoSg5Lm9GW+FgK4ToBGhkz+Mv0i3wnMx
+	 W3IrJ5YBb4f9W4HRrluM7Gli92h5Igrh+CUhctiGUsdqO2K3GjgtlQPxTTX1Tl4OMq
+	 m4ovU7sN7I4mL7tq+GMSPocWQbN2rRp79hmhu0KQWA/VZdJoxmp+v7YQ/JlG9XBwJ0
+	 MWEHC2ESMXAx0Rt2mk28zbXreBa+mJ1coB8oywAKyyb3XODK9g6VjNf1/EnYSl4bxY
+	 RCMXS8ene0d5w==
+Message-ID: <e7c412ca-3bee-4b68-b005-2f3224c936f2@kernel.org>
+Date: Wed, 26 Nov 2025 11:58:20 +0100
 Precedence: bulk
 X-Mailing-List: lch@lists.linux.dev
 List-Id: <lch.lists.linux.dev>
@@ -40,7 +40,6 @@ From: Krzysztof Kozlowski <krzk@kernel.org>
 To: Linux CH <lch@lists.linux.dev>
 References: <73f0845c-b312-4c41-94fe-81a22d70a418@kernel.org>
 Content-Language: en-US
-Cc: Andi Shyti <andi.shyti@kernel.org>
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
@@ -86,7 +85,7 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
 In-Reply-To: <73f0845c-b312-4c41-94fe-81a22d70a418@kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
 On 17/11/2025 22:14, Krzysztof Kozlowski wrote:
 > Hey everyone,
@@ -111,16 +110,10 @@ On 17/11/2025 22:14, Krzysztof Kozlowski wrote:
 > just be precautions or maybe they do not have big tables?
 
 
-I got seven replies so with me it makes 8 people so I booked
-Turbinenbraeu Restaurant/Bar, Badenerstrasse 571, Zürich
-https://maps.app.goo.gl/hCrRsdpCSkkQsAUr7
+Thanks for coming, I hope you enjoyed the place.
 
-Date: 25th November, 18:00 (Tuesday)
-Booking under my name
+We'll take a break for now and we target the next meetup for January.
 
-If anyone else would like to come which did not notify me, then of
-course feel welcome but please let me know, so I can adjust the table
-booking.
 
 Best regards,
 Krzysztof
