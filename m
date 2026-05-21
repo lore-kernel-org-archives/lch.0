@@ -1,33 +1,33 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D42275695
-	for <lch@lists.linux.dev>; Sun, 17 May 2026 14:59:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A20C935DA43
+	for <lch@lists.linux.dev>; Thu, 21 May 2026 07:32:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779029979; cv=none; b=day7h2ecxqEMu06z7v+374X5JSOWVSrRMC0a+Q7QFWZWSnit3qlRzBrX7e5hj2jv+JaR2aWCjhT+/JfxUI8eNrJQQRxg1eKcIfTWZAPc0ZSulfipMUd2bBilN23NdM3Axct0drciswVTlx53TF/iTdEZSP9TS2HEfB9xmpg9gY8=
+	t=1779348774; cv=none; b=HyB2LQsKeWgBE/UFZsgS/IyHjtMPHwYkj8bEe+VyLNC35VhH97rrYir5bZny/fggNZtjjUwm7Z3fQiNzmxRhG/2miYo7G4uIkG5iPQ44gnoRZi25J37j4qY4OxPCo2khs6qYcgGtG/q3SISUl6r3+0BgKzZIYKN7aP0CcTmB03A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779029979; c=relaxed/simple;
-	bh=E4ng5w8NXi65wz+P6tn3XQkx16zcfk51Pk+neP36sNU=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:References:
-	 In-Reply-To:Content-Type; b=eOAymtLOtiuoEM9GDq4HKn+9LwuS/HYWjRA6pm1Bsau8nxvDotyb4NPob+AHMf/S0DrlSWg2YOxFFfXeEVZwZ2E0vWiR6S3SDTLqSVpoiukXvRNLRVpMpkJCTk4PeGJhjzgnGwDKSQVwyIiU3D2laazmdP0r5kI1uSJnmd2psdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OGSJS9EQ; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1779348774; c=relaxed/simple;
+	bh=DrtXEB7qV0uzUywNYlW8e1kIKndeFDxW0zXE/DuBdRo=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:References:
+	 In-Reply-To:Content-Type; b=GIqDNN1HXTplWT1djxz05YyyaNwEuGXpOixCBVkA5j+MDj/rWUO/NlGN5nz4NsNZm3liNiSaBmiIISB8VxPg67d+GYSQnhBhNq/8SDHL2Zurr/u6NYmm2YmFAhdSzdlUGRqgSTwiExvnPd6qgw+Ga5rZ+vbPHTLD0JXzVEzXhzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bPRJJ4VE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OGSJS9EQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCF94C2BCB0;
-	Sun, 17 May 2026 14:59:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1779029979;
-	bh=E4ng5w8NXi65wz+P6tn3XQkx16zcfk51Pk+neP36sNU=;
-	h=Date:From:Subject:To:References:In-Reply-To:From;
-	b=OGSJS9EQx1H5PBbup9BX1XcTLJU2tPTkuKyvCnHtyqdvlHisGDavOL7Wgk+NVlOAD
-	 Qemsr+ud7H/7GNise6x/Uq1mwYiiJwSFD7ckq+uMp28Wl88H/t0QESYLCGKXn8ESnx
-	 pJXYg/K6O95QS5ijqXcKkbHlPNbUCpESVD+zLL2kR/hPPNir4PlJXTTSl+1ebcNp8X
-	 ruxgoMdI09HUHQrNrychRLk7mXvbvdIi7eV43Uaf/oyI6ltRhdrFW+3sXlCe2Zz5R7
-	 Zi0IElnqDptcyEecSvtZh/YLWDKSoPsaZaBOh38Tfl1PBPJE3QCISEn2bzTxiM0ndE
-	 jYwSAma045OFA==
-Message-ID: <558c8865-09e5-4df2-980f-d18905cfd5c4@kernel.org>
-Date: Sun, 17 May 2026 16:59:37 +0200
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bPRJJ4VE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 999F91F000E9;
+	Thu, 21 May 2026 07:32:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1779348773;
+	bh=pBbN+Tu6L5F8oiJIqC+JfYZmgMalYI0yW30uIDxN1vA=;
+	h=Date:Subject:From:To:References:In-Reply-To;
+	b=bPRJJ4VEQ6NgA42g9IOzaJMoqftF17Kx3I29BjVdM+rl387CkflYBUtcmIUB+0M96
+	 KyFhqyuLF+kXIEN4BPu4NeVAjKxvTAq8l5rbyvwnRL/vS3oMbX0/D+DxCoNPavFLDF
+	 hqHtO6ctsrWNMfhe+W0GiB58IioN2XeIUurXNZmzdOjaokGyeJG0B+8QM1Mim+HE3F
+	 iAHBI5LqoWK0fUKnHDJF/P+NDvBCADkLFZgz6vLMC+Lk16C/xDdK2+qOFcFC/Rpajv
+	 8ZoUZ2q04Lnsw6bW5adC9QGcq3cMZ+9vG2W1FKl0/JRUpEpoA+X1ybitlxqk7lawK6
+	 9Vac7KDAVYWzw==
+Message-ID: <c91acb87-f62d-445d-9cb7-c005e1c37297@kernel.org>
+Date: Thu, 21 May 2026 09:32:50 +0200
 Precedence: bulk
 X-Mailing-List: lch@lists.linux.dev
 List-Id: <lch.lists.linux.dev>
@@ -35,12 +35,13 @@ List-Subscribe: <mailto:lch+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lch+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Krzysztof Kozlowski <krzk@kernel.org>
 Subject: Re: Linux'n'Beer v7
+From: Krzysztof Kozlowski <krzk@kernel.org>
 To: Linux CH <lch@lists.linux.dev>, Andi Shyti <andi.shyti@kernel.org>
 References: <73f0845c-b312-4c41-94fe-81a22d70a418@kernel.org>
  <e7c412ca-3bee-4b68-b005-2f3224c936f2@kernel.org>
  <eef444c7be2ee006b77779d6d2519ff0137f1eb5.camel@mailbox.org>
+ <558c8865-09e5-4df2-980f-d18905cfd5c4@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -85,31 +86,28 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <eef444c7be2ee006b77779d6d2519ff0137f1eb5.camel@mailbox.org>
+In-Reply-To: <558c8865-09e5-4df2-980f-d18905cfd5c4@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-Hey everyone,
+On 17/05/2026 16:59, Krzysztof Kozlowski wrote:
+> Hey everyone,
+> 
+> I slacked and did not organize anything, so one more try of not
+> procrastinating. Due to tricky timing, no choice of dates, but fixed time:
+> 
+> Date: Friday, 22nd May 2026, starting at 18:00
+> Place (probably, I will make a booking once knowing amount of people):
+> Kennedy's Irish Pub
+> https://maps.app.goo.gl/T9cSVjJ9PhngPvSW8
 
-I slacked and did not organize anything, so one more try of not
-procrastinating. Due to tricky timing, no choice of dates, but fixed time:
+To remind, this Friday, 22nd of May.
 
-Date: Friday, 22nd May 2026, starting at 18:00
-Place (probably, I will make a booking once knowing amount of people):
-Kennedy's Irish Pub
+I confirm the place - it will be Kennedy's Irish Pub
 https://maps.app.goo.gl/T9cSVjJ9PhngPvSW8
 
-Please confirm by responding to email or participating in survey:
-https://doodle.com/group-poll/participate/dyAjmQVd
+We start at 18:00 and reservation is in my name.
 
-Reminder: we have also IRC channel:
-Libera network: #linuxnbeer-ch
-
-However not everyone uses IRC and away from keyboard even less people.
-That is making tricky if for example one is lost and needs to find the
-event just before, therefore I sold my soul to meta and set up a
-Whatsapp community/group. I will send links for that in offline channels
-(feel free to ping me to get the invitation link).
 
 Best regards,
 Krzysztof
