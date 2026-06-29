@@ -1,32 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37D9A3FE650
-	for <lch@lists.linux.dev>; Mon, 29 Jun 2026 12:16:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB02640681C
+	for <lch@lists.linux.dev>; Mon, 29 Jun 2026 13:12:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782735396; cv=none; b=gJcy8ofsoaQcM/u/RUNJblmJPSlB1ZfPTk95Ug4O52hb2CH5UbuYb0hDSIsESGHvzTfALaUXBJ4ZqVuTWUpUyswcv/fiRHrvV/weEZlOOQVYLXCObVXIAQjWp1zc9Slfyu+uQTRU/BZlZTqcH6wjR8w48O3ycUM8o9LbibZoP0w=
+	t=1782738780; cv=none; b=ThlSrrbU+29GnQ3ikMOFraYWORTNxD660Hep38oNKCnc3cVAA8G7Skiwsquk0Q/X88MtAqfCWDF9w/7/zSM3Vw2o/YVHlbPv/aZ2YBnFThCWbyl13/wMXZK2qd4WZ9L25uIkP19unxUTipOtxkX2RRgiR91pOZnrSqC2E4SaAmc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782735396; c=relaxed/simple;
-	bh=9HqgGZf4YaleWFPCxADosv+pmzJEvFqfzoEEFK4GWpY=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Content-Type; b=AkTJK64Dff3vYIUeIk2w2Xet6rebki469IOO+ikXFE6xGAXNiMtaOFyxNhKFX15EZOYnmMc6vrt5CoBdfu3lVMxFsgNf5I4HuvhTB+9wmjD0VgzIK4ED3hTjuNGkZDDi1cnSTAQrk0URNT3uhs0Xo1dz7fHm5WhkbcNKzZx1biQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RX9MH8sp; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782738780; c=relaxed/simple;
+	bh=N9DXq1Vatnhhl1J1uhZhGNhZRioawqpM+H9QUHVZaLo=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:References:
+	 In-Reply-To:Content-Type; b=hFbu/rOh9xpJTYoqesGKScDKyfDJVsgzVFGMaSa7OpWDR8wPIbUUoSJfHcp1sE7xzec5JToVz+htIh73NOxmNmml9JjkjhAVgcMlG/JQZ1ZrTv4nxNvM6A2ZVCnnthBLLMN/UHLlmjdKFMJkpA/rXk7pcgo/iKURns7RaSPtO9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XAijAevp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RX9MH8sp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFED91F00A3A;
-	Mon, 29 Jun 2026 12:16:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XAijAevp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E21A1F000E9;
+	Mon, 29 Jun 2026 13:12:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782735394;
-	bh=9HqgGZf4YaleWFPCxADosv+pmzJEvFqfzoEEFK4GWpY=;
-	h=Date:From:Subject:To;
-	b=RX9MH8spe+WLZHeSndk0cuPHJbAWAI9eqxklP6BdpP2WofgmJ20UPj3USMrqzSjri
-	 bfdVYSA3Xvk62g7PbsrH16Uo8oL/8XyVxqdh+M6wS7Vt9Crl3WN9FA/UGuG8YFi0d/
-	 I38aUFZZox1F1+vJzJUHIN98jHXBG/6ZUAfOa0mi9u3bFHpKJP2263OfFbCZ72I9Dp
-	 kgOCoNGv58P3VS/MNXukI7NZ4eAsZTc0/mftcgUX9gWXe1BAXP7q/1kCgqnFEiKeuz
-	 Pq0y79dZYLP5Qpz5aQxotQSVQGLG0qMzrjkDNbYseqoowzDpPNCvbMUMVuwmZDSKlM
-	 GkdEKxzjpdOoQ==
-Message-ID: <49d3a2a8-68bd-4579-8223-bccc0fa61cac@kernel.org>
-Date: Mon, 29 Jun 2026 14:16:31 +0200
+	s=k20260515; t=1782738779;
+	bh=IuhhUlelcDY0u2ABqIkKmJTVj4pn9Mcn+fI+jmfpxPs=;
+	h=Date:Subject:From:To:References:In-Reply-To;
+	b=XAijAevpJ9zR96EA6WF5kt2A6VAT4HNEMJShLm2nFSlWuA/M1j47QYzuHpRsFpLv7
+	 mZfTexmUjvwgf+NpIFDc0K1piorIJ+CAq3Vs2pCyjXEMmnFBfT2TlIiruNYuGhGShL
+	 wvxxeRoCuCrqdWvrei4quX8pRmwzmfIqY5q7Uhu5ppMw7D3y+SslxxP8EGGjJVj1nN
+	 yDDITAzNjO5g3ufsPeXa4zDFhsKvmJ6XeB4cyhx91VSeGBEpUkFh3YtmK8b8WXzSlL
+	 pqyxTPKzAquj5olftt6qzUr9to8TlyjqReoA1RqTxqu2ZQ8C2Ytp8rNPt/NBOKHhG8
+	 mNuliyFTU280w==
+Message-ID: <4f827c46-80bc-44af-be69-6a4af3c9379e@kernel.org>
+Date: Mon, 29 Jun 2026 15:12:57 +0200
 Precedence: bulk
 X-Mailing-List: lch@lists.linux.dev
 List-Id: <lch.lists.linux.dev>
@@ -34,9 +35,10 @@ List-Subscribe: <mailto:lch+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lch+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
+Subject: Re: Linux'n'Beer, July 2026
 From: Krzysztof Kozlowski <krzk@kernel.org>
-Subject: Linux'n'Beer, July 2026
 To: Linux CH <lch@lists.linux.dev>
+References: <49d3a2a8-68bd-4579-8223-bccc0fa61cac@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -81,37 +83,50 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  K9bCVaboTA2T77QYkRcRJYSsO1alGX0ome/hMLD1daXlkrNUp1HWa3K4iytLRXjCSIorWiGs
  n+q3krnpXu3TFkA8qtOFZMdnIiFuiq1yLT8hptsV5xh1TA2nsVvSYiaCr3q4s4BKjS/KrLDb
  qoxzw8ISjdUp4pA85vb6YLCmb39NgidD+7PmAr65lBNveIFynTgsja1rRQ4=
+In-Reply-To: <49d3a2a8-68bd-4579-8223-bccc0fa61cac@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-Hey everyone,
+On 29/06/2026 14:16, Krzysztof Kozlowski wrote:
+> Hey everyone,
+> 
+> For next Linux'n'Beer event, I was thinking about Craft Beer Hike,
+> previously proposed by Christoph.
+> 
+> This is an outdoor event on 11th July around Zurich:
+> https://craftbeertrail.ch/
+> 
+> It is a hike with visiting local breweries/pubs with good beer. It
+> requires buying tickets, though.
+> 
+> However, more importantly: not sure if with this weather I could do a
+> hike/walk in the middle of day. :)
+> 
+> If the weather on 11th July is good, as in not melting, I will probably
+> go for the hike and we can meet there as well.
+> 
+> 
+> But except the hike, let's try to meet in a outside-dining option a bit
+> earlier:
+> 
+> Date: Thursday, 9th of July 2026, starting at 18:00
+> Place: Zum Frischen Max, Oerlikon
+> https://maps.app.goo.gl/spKYFpU1tCtVtKSQ7
+> 
+> Please confirm attendance on 9th of July, by responding to email or on
+> IRC (Libera/#linuxnbeer-ch) or in Whatsapp group, so I could book
+> appropriate table.
+> 
 
-For next Linux'n'Beer event, I was thinking about Craft Beer Hike,
-previously proposed by Christoph.
+Change of plans! Embedded software meetup happens that time, so let's
+not create conflicting events.
 
-This is an outdoor event on 11th July around Zurich:
-https://craftbeertrail.ch/
+New planned time, one week later - 16th July:
 
-It is a hike with visiting local breweries/pubs with good beer. It
-requires buying tickets, though.
-
-However, more importantly: not sure if with this weather I could do a
-hike/walk in the middle of day. :)
-
-If the weather on 11th July is good, as in not melting, I will probably
-go for the hike and we can meet there as well.
-
-
-But except the hike, let's try to meet in a outside-dining option a bit
-earlier:
-
-Date: Thursday, 9th of July 2026, starting at 18:00
+Date: Thursday, 16th of July 2026, starting at 18:00
 Place: Zum Frischen Max, Oerlikon
 https://maps.app.goo.gl/spKYFpU1tCtVtKSQ7
 
-Please confirm attendance on 9th of July, by responding to email or on
-IRC (Libera/#linuxnbeer-ch) or in Whatsapp group, so I could book
-appropriate table.
 
 Best regards,
 Krzysztof
