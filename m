@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB02640681C
-	for <lch@lists.linux.dev>; Mon, 29 Jun 2026 13:12:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F32DF357CE0
+	for <lch@lists.linux.dev>; Mon, 13 Jul 2026 20:31:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782738780; cv=none; b=ThlSrrbU+29GnQ3ikMOFraYWORTNxD660Hep38oNKCnc3cVAA8G7Skiwsquk0Q/X88MtAqfCWDF9w/7/zSM3Vw2o/YVHlbPv/aZ2YBnFThCWbyl13/wMXZK2qd4WZ9L25uIkP19unxUTipOtxkX2RRgiR91pOZnrSqC2E4SaAmc=
+	t=1783974691; cv=none; b=l2NsxAZYmiOEVKiw8KJzc0Q7YH1CjuCsJeqR4byMH0DKpMGMEB97IgmSbunkE5h1Yk4LdNiR2nPFmReWwFLBOTEFpj+M2bt1oCS9BbBd+/254SBTtDExl0Z4pKoY9a5EwYEAWEgON9veph2Pku13jOVAqXfX6q40AfgvfnQOssU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782738780; c=relaxed/simple;
-	bh=N9DXq1Vatnhhl1J1uhZhGNhZRioawqpM+H9QUHVZaLo=;
+	s=arc-20240116; t=1783974691; c=relaxed/simple;
+	bh=dgr08gnL98An6zJ4vEbggEnZm9hCrF74tVvjj8m/4Gs=;
 	h=Message-ID:Date:MIME-Version:Subject:From:To:References:
-	 In-Reply-To:Content-Type; b=hFbu/rOh9xpJTYoqesGKScDKyfDJVsgzVFGMaSa7OpWDR8wPIbUUoSJfHcp1sE7xzec5JToVz+htIh73NOxmNmml9JjkjhAVgcMlG/JQZ1ZrTv4nxNvM6A2ZVCnnthBLLMN/UHLlmjdKFMJkpA/rXk7pcgo/iKURns7RaSPtO9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XAijAevp; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:Content-Type; b=EqhEsK9tPxWYUAW68hYFKjTm422cfC41iqI69Qa5S/3JmL/mgL6k97qNyUAGKzeSOKDpKG3KN7WnQA2Zx3epGHhaoOE/NgUkzRBjQTCr+VMT6Cqxh+by9GV9QUI903VcmdCNaPIEMMfr3CgTX29aPorR9WJQP8kJPkI2Z3JUh/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VUpRQKrz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XAijAevp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E21A1F000E9;
-	Mon, 29 Jun 2026 13:12:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VUpRQKrz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A15861F000E9;
+	Mon, 13 Jul 2026 20:31:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782738779;
-	bh=IuhhUlelcDY0u2ABqIkKmJTVj4pn9Mcn+fI+jmfpxPs=;
+	s=k20260515; t=1783974690;
+	bh=SNwu6hFNf1HPqfyIfRvq7rCGDjRpMR+3gvEjpPFZceY=;
 	h=Date:Subject:From:To:References:In-Reply-To;
-	b=XAijAevpJ9zR96EA6WF5kt2A6VAT4HNEMJShLm2nFSlWuA/M1j47QYzuHpRsFpLv7
-	 mZfTexmUjvwgf+NpIFDc0K1piorIJ+CAq3Vs2pCyjXEMmnFBfT2TlIiruNYuGhGShL
-	 wvxxeRoCuCrqdWvrei4quX8pRmwzmfIqY5q7Uhu5ppMw7D3y+SslxxP8EGGjJVj1nN
-	 yDDITAzNjO5g3ufsPeXa4zDFhsKvmJ6XeB4cyhx91VSeGBEpUkFh3YtmK8b8WXzSlL
-	 pqyxTPKzAquj5olftt6qzUr9to8TlyjqReoA1RqTxqu2ZQ8C2Ytp8rNPt/NBOKHhG8
-	 mNuliyFTU280w==
-Message-ID: <4f827c46-80bc-44af-be69-6a4af3c9379e@kernel.org>
-Date: Mon, 29 Jun 2026 15:12:57 +0200
+	b=VUpRQKrzJy1tDcwTIPS6ZCAVG9H7JuZnfgDKK7LLwYVC3oqlHSz4tj7Qyk97Vr1iK
+	 +KDUmojQ7uy6Cqbvn26gUKbdQjbrX50KwPu2VfGSapL+C8k+r9bGebgBOkxa7Fu6cn
+	 RN/r+zob3h2ikDIIL+ReiJDRrsBeLtBf2hd3NVfS5w4hI3kc4K9C/A/jZftpUnTN/k
+	 FJYng+LLhkuUW/RztOVnZjDEbEjHrY3FvcYzlWQlrNSI3bGEq0rhcaVUQwhFDXsjpz
+	 V6ig8mGI5LAiIxEfxhTJUG/yy4tB2xrVuBCDuPOKJThr0+bLjnKXJwdIAzYuzWG9NC
+	 2i93LBHwQj2sA==
+Message-ID: <6fd9c592-bf53-4f54-9036-57cf821723d4@kernel.org>
+Date: Mon, 13 Jul 2026 22:31:27 +0200
 Precedence: bulk
 X-Mailing-List: lch@lists.linux.dev
 List-Id: <lch.lists.linux.dev>
@@ -39,6 +39,7 @@ Subject: Re: Linux'n'Beer, July 2026
 From: Krzysztof Kozlowski <krzk@kernel.org>
 To: Linux CH <lch@lists.linux.dev>
 References: <49d3a2a8-68bd-4579-8223-bccc0fa61cac@kernel.org>
+ <4f827c46-80bc-44af-be69-6a4af3c9379e@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -83,50 +84,25 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  K9bCVaboTA2T77QYkRcRJYSsO1alGX0ome/hMLD1daXlkrNUp1HWa3K4iytLRXjCSIorWiGs
  n+q3krnpXu3TFkA8qtOFZMdnIiFuiq1yLT8hptsV5xh1TA2nsVvSYiaCr3q4s4BKjS/KrLDb
  qoxzw8ISjdUp4pA85vb6YLCmb39NgidD+7PmAr65lBNveIFynTgsja1rRQ4=
-In-Reply-To: <49d3a2a8-68bd-4579-8223-bccc0fa61cac@kernel.org>
+In-Reply-To: <4f827c46-80bc-44af-be69-6a4af3c9379e@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 29/06/2026 14:16, Krzysztof Kozlowski wrote:
-> Hey everyone,
+On 29/06/2026 15:12, Krzysztof Kozlowski wrote:
+> On 29/06/2026 14:16, Krzysztof Kozlowski wrote:
 > 
-> For next Linux'n'Beer event, I was thinking about Craft Beer Hike,
-> previously proposed by Christoph.
+> Change of plans! Embedded software meetup happens that time, so let's
+> not create conflicting events.
 > 
-> This is an outdoor event on 11th July around Zurich:
-> https://craftbeertrail.ch/
+> New planned time, one week later - 16th July:
 > 
-> It is a hike with visiting local breweries/pubs with good beer. It
-> requires buying tickets, though.
-> 
-> However, more importantly: not sure if with this weather I could do a
-> hike/walk in the middle of day. :)
-> 
-> If the weather on 11th July is good, as in not melting, I will probably
-> go for the hike and we can meet there as well.
-> 
-> 
-> But except the hike, let's try to meet in a outside-dining option a bit
-> earlier:
-> 
-> Date: Thursday, 9th of July 2026, starting at 18:00
+> Date: Thursday, 16th of July 2026, starting at 18:00
 > Place: Zum Frischen Max, Oerlikon
 > https://maps.app.goo.gl/spKYFpU1tCtVtKSQ7
-> 
-> Please confirm attendance on 9th of July, by responding to email or on
-> IRC (Libera/#linuxnbeer-ch) or in Whatsapp group, so I could book
-> appropriate table.
-> 
 
-Change of plans! Embedded software meetup happens that time, so let's
-not create conflicting events.
 
-New planned time, one week later - 16th July:
-
-Date: Thursday, 16th of July 2026, starting at 18:00
-Place: Zum Frischen Max, Oerlikon
-https://maps.app.goo.gl/spKYFpU1tCtVtKSQ7
-
+Just a reminder folks, this Thursday, 16th of July, next beer meetup at
+Zum Frischen Max, Oerlikon.
 
 Best regards,
 Krzysztof
