@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F32DF357CE0
-	for <lch@lists.linux.dev>; Mon, 13 Jul 2026 20:31:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E26CB40A932
+	for <lch@lists.linux.dev>; Thu, 16 Jul 2026 11:06:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783974691; cv=none; b=l2NsxAZYmiOEVKiw8KJzc0Q7YH1CjuCsJeqR4byMH0DKpMGMEB97IgmSbunkE5h1Yk4LdNiR2nPFmReWwFLBOTEFpj+M2bt1oCS9BbBd+/254SBTtDExl0Z4pKoY9a5EwYEAWEgON9veph2Pku13jOVAqXfX6q40AfgvfnQOssU=
+	t=1784199964; cv=none; b=k//mSgSqwuPPMeqKUrIeifxIgpKvqEmYMcX/d6rSgxgxYK3aLd431+n8QVj3JXJKz5sFQxwu/HjjlcBKVBoFD2cpkbQGyzs/e6F/4vuQceWVcMK/hqCrAxDpwfYNQzqGGu7icuq1VU/9wOwVc22PDWe0dlEBzrevxGOgW8NplVI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783974691; c=relaxed/simple;
-	bh=dgr08gnL98An6zJ4vEbggEnZm9hCrF74tVvjj8m/4Gs=;
+	s=arc-20240116; t=1784199964; c=relaxed/simple;
+	bh=p0NnVcc1JIDOsi1XH+Gc4rBgilKhTtG119yuQ4eEt8g=;
 	h=Message-ID:Date:MIME-Version:Subject:From:To:References:
-	 In-Reply-To:Content-Type; b=EqhEsK9tPxWYUAW68hYFKjTm422cfC41iqI69Qa5S/3JmL/mgL6k97qNyUAGKzeSOKDpKG3KN7WnQA2Zx3epGHhaoOE/NgUkzRBjQTCr+VMT6Cqxh+by9GV9QUI903VcmdCNaPIEMMfr3CgTX29aPorR9WJQP8kJPkI2Z3JUh/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VUpRQKrz; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:Content-Type; b=GjwDxpPhFmy/sdL/4RYTRGTvVpQ/b9WcRrX5oPGZ2Cm4kXK2v4hxCxwFlcShurmxKvdHiMhkVxC3xNvq126BNF/9TJ7PciAph10krYmm/fPpA/vVLPmy0h5N/tXU7I9NlIK5PNfUlnt6Q3xuskpnpUMAlyTRCsbdhM+f0uSktwY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PYLo2nO/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VUpRQKrz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A15861F000E9;
-	Mon, 13 Jul 2026 20:31:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PYLo2nO/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A988E1F00A3F;
+	Thu, 16 Jul 2026 11:06:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783974690;
-	bh=SNwu6hFNf1HPqfyIfRvq7rCGDjRpMR+3gvEjpPFZceY=;
+	s=k20260515; t=1784199963;
+	bh=ifS8LRM+F694z48eNDzYyfWwPMBAwQ6eGnytJycV+TE=;
 	h=Date:Subject:From:To:References:In-Reply-To;
-	b=VUpRQKrzJy1tDcwTIPS6ZCAVG9H7JuZnfgDKK7LLwYVC3oqlHSz4tj7Qyk97Vr1iK
-	 +KDUmojQ7uy6Cqbvn26gUKbdQjbrX50KwPu2VfGSapL+C8k+r9bGebgBOkxa7Fu6cn
-	 RN/r+zob3h2ikDIIL+ReiJDRrsBeLtBf2hd3NVfS5w4hI3kc4K9C/A/jZftpUnTN/k
-	 FJYng+LLhkuUW/RztOVnZjDEbEjHrY3FvcYzlWQlrNSI3bGEq0rhcaVUQwhFDXsjpz
-	 V6ig8mGI5LAiIxEfxhTJUG/yy4tB2xrVuBCDuPOKJThr0+bLjnKXJwdIAzYuzWG9NC
-	 2i93LBHwQj2sA==
-Message-ID: <6fd9c592-bf53-4f54-9036-57cf821723d4@kernel.org>
-Date: Mon, 13 Jul 2026 22:31:27 +0200
+	b=PYLo2nO/wAImWwpPc3/1NEJMYjlwFp+kdf6NlyqFlz0DGBAGOrvTENuiUJ5Gy0tFK
+	 31ZIuQosxh6uMTCHTKHTRDcMihiR/qQJ5Mv78i3BIWOZUbv2uBzjcxz9mZ3TEeae77
+	 Qn0kAtrP2yxKmgARuc2bdjDcXe/n4WimBHJavVJdWJbSSQlGj8iDoP780egEUhY2ur
+	 EPOhOOAhK4g3vL2I58I0VFpV06RzaSBjuWTP32D6vc9uqJLo+Z7E0WaVYf98g7hvBI
+	 6xx3lvOVpf3NDA8SzQnUqitDP7EYxZlV3B2ouZNZrPQCZz1h5wLeByOKvHKc2XvQcl
+	 g+afndGS6LsVA==
+Message-ID: <27af0ed4-2fa0-4f3d-955a-94858f0a19bc@kernel.org>
+Date: Thu, 16 Jul 2026 13:05:59 +0200
 Precedence: bulk
 X-Mailing-List: lch@lists.linux.dev
 List-Id: <lch.lists.linux.dev>
@@ -40,6 +40,7 @@ From: Krzysztof Kozlowski <krzk@kernel.org>
 To: Linux CH <lch@lists.linux.dev>
 References: <49d3a2a8-68bd-4579-8223-bccc0fa61cac@kernel.org>
  <4f827c46-80bc-44af-be69-6a4af3c9379e@kernel.org>
+ <6fd9c592-bf53-4f54-9036-57cf821723d4@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -84,25 +85,29 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  K9bCVaboTA2T77QYkRcRJYSsO1alGX0ome/hMLD1daXlkrNUp1HWa3K4iytLRXjCSIorWiGs
  n+q3krnpXu3TFkA8qtOFZMdnIiFuiq1yLT8hptsV5xh1TA2nsVvSYiaCr3q4s4BKjS/KrLDb
  qoxzw8ISjdUp4pA85vb6YLCmb39NgidD+7PmAr65lBNveIFynTgsja1rRQ4=
-In-Reply-To: <4f827c46-80bc-44af-be69-6a4af3c9379e@kernel.org>
+In-Reply-To: <6fd9c592-bf53-4f54-9036-57cf821723d4@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 29/06/2026 15:12, Krzysztof Kozlowski wrote:
-> On 29/06/2026 14:16, Krzysztof Kozlowski wrote:
+On 13/07/2026 22:31, Krzysztof Kozlowski wrote:
+> On 29/06/2026 15:12, Krzysztof Kozlowski wrote:
+>> On 29/06/2026 14:16, Krzysztof Kozlowski wrote:
+>>
+>> Change of plans! Embedded software meetup happens that time, so let's
+>> not create conflicting events.
+>>
+>> New planned time, one week later - 16th July:
+>>
+>> Date: Thursday, 16th of July 2026, starting at 18:00
+>> Place: Zum Frischen Max, Oerlikon
+>> https://maps.app.goo.gl/spKYFpU1tCtVtKSQ7
 > 
-> Change of plans! Embedded software meetup happens that time, so let's
-> not create conflicting events.
 > 
-> New planned time, one week later - 16th July:
-> 
-> Date: Thursday, 16th of July 2026, starting at 18:00
-> Place: Zum Frischen Max, Oerlikon
-> https://maps.app.goo.gl/spKYFpU1tCtVtKSQ7
+> Just a reminder folks, this Thursday, 16th of July, next beer meetup at
+> Zum Frischen Max, Oerlikon.
 
-
-Just a reminder folks, this Thursday, 16th of July, next beer meetup at
-Zum Frischen Max, Oerlikon.
+I did not book a table, for sure we will find something. I'll have
+Linux'n'beer logo to be easier to find.
 
 Best regards,
 Krzysztof
