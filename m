@@ -1,113 +1,68 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E26CB40A932
-	for <lch@lists.linux.dev>; Thu, 16 Jul 2026 11:06:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ED59344D9D
+	for <lch@lists.linux.dev>; Sat, 10 Oct 2026 09:48:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784199964; cv=none; b=k//mSgSqwuPPMeqKUrIeifxIgpKvqEmYMcX/d6rSgxgxYK3aLd431+n8QVj3JXJKz5sFQxwu/HjjlcBKVBoFD2cpkbQGyzs/e6F/4vuQceWVcMK/hqCrAxDpwfYNQzqGGu7icuq1VU/9wOwVc22PDWe0dlEBzrevxGOgW8NplVI=
+	t=1791625686; cv=none; b=qoDHYqA5o1nICWbqQNZFhTRUV8p6w+vBIxDh4oYnWSbxVHWABMiWe/GGM7mV72+U5plE7tnnmqWrNrRQGhO++egWsANplHAwIwFW4G5MziCHe4zKI/L2AGWr0vi1JA+uNOSDm+bBaMwPUyHKw6h0GpsxF8jBJpJW9Whj7/b/ioc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784199964; c=relaxed/simple;
-	bh=p0NnVcc1JIDOsi1XH+Gc4rBgilKhTtG119yuQ4eEt8g=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:References:
-	 In-Reply-To:Content-Type; b=GjwDxpPhFmy/sdL/4RYTRGTvVpQ/b9WcRrX5oPGZ2Cm4kXK2v4hxCxwFlcShurmxKvdHiMhkVxC3xNvq126BNF/9TJ7PciAph10krYmm/fPpA/vVLPmy0h5N/tXU7I9NlIK5PNfUlnt6Q3xuskpnpUMAlyTRCsbdhM+f0uSktwY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PYLo2nO/; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791625686; c=relaxed/simple;
+	bh=AgYPEW1PgUPJUcfWfnYgkLP+/CRk02k++YbDKEzYstY=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=bECawLzOL90v62AvxUU23+MYCcwF3ww78EJHegySydIvMo8jDHEHFxdYCbH6ngolpqOeTmizk3VtM1MqBeIeV4eDpO47FlJ6dVFlkyFB/086XCTliofaiIM2fCc4avzDhyj4CF8q35lrGL+X+EQACsni/0Wnn5tOfMMa1FJuBVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HDqC+baY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PYLo2nO/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A988E1F00A3F;
-	Thu, 16 Jul 2026 11:06:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HDqC+baY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B9501F000FF
+	for <lch@lists.linux.dev>; Sat, 10 Oct 2026 09:48:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784199963;
-	bh=ifS8LRM+F694z48eNDzYyfWwPMBAwQ6eGnytJycV+TE=;
-	h=Date:Subject:From:To:References:In-Reply-To;
-	b=PYLo2nO/wAImWwpPc3/1NEJMYjlwFp+kdf6NlyqFlz0DGBAGOrvTENuiUJ5Gy0tFK
-	 31ZIuQosxh6uMTCHTKHTRDcMihiR/qQJ5Mv78i3BIWOZUbv2uBzjcxz9mZ3TEeae77
-	 Qn0kAtrP2yxKmgARuc2bdjDcXe/n4WimBHJavVJdWJbSSQlGj8iDoP780egEUhY2ur
-	 EPOhOOAhK4g3vL2I58I0VFpV06RzaSBjuWTP32D6vc9uqJLo+Z7E0WaVYf98g7hvBI
-	 6xx3lvOVpf3NDA8SzQnUqitDP7EYxZlV3B2ouZNZrPQCZz1h5wLeByOKvHKc2XvQcl
-	 g+afndGS6LsVA==
-Message-ID: <27af0ed4-2fa0-4f3d-955a-94858f0a19bc@kernel.org>
-Date: Thu, 16 Jul 2026 13:05:59 +0200
+	s=k20260515; t=1791625684;
+	bh=AgYPEW1PgUPJUcfWfnYgkLP+/CRk02k++YbDKEzYstY=;
+	h=Date:From:To:Subject;
+	b=HDqC+baYZ3El4ubpgiNzfZn9B5sdi874TXxaL9KIRsCIZLr5rt/8yRdy2lhhjd8m2
+	 tp6dkM2yGdpIVLELFKHH+lwHGHqXYCuaNqnJUxbQCdir17fofPrfMbXXZ4rRM81Ik4
+	 0chlfNWCMsVj3zM2ZLSx6piFM+RaA19rHBdU7jrMxOUuR2zG4XGuDpizgbBphkJrY1
+	 Fk4HLTS9DZ1qCdSgw5DsEexphCCx+A44i1N/WtXjM3KcgxEOKk9n5mbAAgAmPK6KCg
+	 xjQgFatZwyG8/222bSh0W0fQitFjRLEOUYrj9Wyq8sfzHB0MUR4qpR9cfGUyuroEyg
+	 WGEyuA2WechIQ==
+Date: Sat, 10 Oct 2026 11:47:57 +0200
+From: Andi Shyti <andi.shyti@kernel.org>
+To: Linux CH <lch@lists.linux.dev>
+Subject: Linux'n'Beer October
+Message-ID: <asoE_yLhcUDtxiX1@zenone.zhora.eu>
 Precedence: bulk
 X-Mailing-List: lch@lists.linux.dev
 List-Id: <lch.lists.linux.dev>
 List-Subscribe: <mailto:lch+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lch+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Linux'n'Beer, July 2026
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Linux CH <lch@lists.linux.dev>
-References: <49d3a2a8-68bd-4579-8223-bccc0fa61cac@kernel.org>
- <4f827c46-80bc-44af-be69-6a4af3c9379e@kernel.org>
- <6fd9c592-bf53-4f54-9036-57cf821723d4@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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
-In-Reply-To: <6fd9c592-bf53-4f54-9036-57cf821723d4@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On 13/07/2026 22:31, Krzysztof Kozlowski wrote:
-> On 29/06/2026 15:12, Krzysztof Kozlowski wrote:
->> On 29/06/2026 14:16, Krzysztof Kozlowski wrote:
->>
->> Change of plans! Embedded software meetup happens that time, so let's
->> not create conflicting events.
->>
->> New planned time, one week later - 16th July:
->>
->> Date: Thursday, 16th of July 2026, starting at 18:00
->> Place: Zum Frischen Max, Oerlikon
->> https://maps.app.goo.gl/spKYFpU1tCtVtKSQ7
-> 
-> 
-> Just a reminder folks, this Thursday, 16th of July, next beer meetup at
-> Zum Frischen Max, Oerlikon.
+Hi everyone,
 
-I did not book a table, for sure we will find something. I'll have
-Linux'n'beer logo to be easier to find.
+Long time no see. I hope you are all doing well!
 
-Best regards,
-Krzysztof
+I'm writing from Prague after a week of LPC and OSS, where I met
+quite a few people from this community. Maybe next time we should
+organise a small Swiss meetup there too.
+
+Anyway, it is definitely time to meet again, have a good beer and
+talk about Linux and whatever else comes up.
+
+I would propose 23 October in Zurich, at a place to be chosen by
+someone who knows Zurich better than I do. Suggestions are very
+welcome.
+
+In the meantime, I created a poll so we can see how many people
+are coming:
+
+https://framadate.org/polls/43d8ed815ca2cb840d7e
+
+As always, feel free to invite anyone who might enjoy some good
+technical discussions and a good beer.
+
+Looking forward to seeing you all again.
+
+Andi
